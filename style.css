@@ -1,0 +1,107 @@
+@charset "utf-8";
+
+/*website style for width more than 550px */
+
+
+/* Style for the headers*/
+
+h1 {
+	color:black;
+    text-shadow: 4px 4px #C8C8C8;
+	min-width:50px;
+  }
+  
+#home h2{
+	text-align:left;
+    color:black;
+    text-shadow: 4px 4px #C8C8C8;
+}
+  
+h3{
+	text-align:left;
+	color:black;
+    text-shadow: 1px 1px #C8C8C8;
+	font-size:20px;
+  }
+  
+h4{
+	text-align:left;
+	color:black;
+    text-shadow: 1px 1px #C8C8C8;
+	font-size:15px;
+  }
+  /* style for the treatment*/
+#treatment{
+	margin-left: auto;
+    margin-right: auto;
+	box-shadow: 10px 10px 5px grey;
+}
+
+/* style for the form*/
+form{
+	padding:3px;
+	margin-left:20px;
+    margin-right:20px;
+}
+
+.ui-header { 
+   	padding:0px 0px 0px 0px;
+	margin:0px 0px 0px 0px;
+ 	font-size:22px;
+}
+
+.ui-footer { 
+	text-shadow: 2px 2px white;
+	text-align:left;
+	font-size:15px;
+}
+
+#item_{
+	display: none;
+}
+
+/* scroll*/
+
+#Toilet_Log{
+  max-height:250px;
+  overflow-y:scroll;
+  -webkit-overflow-scrolling: touch;
+}
+
+/*Style for the content of home page*/
+#home ul li a{
+	min-width:200px;
+	margin:0px 3px 0px 2px;
+	font-size:19px;
+}
+.ui-content{
+	min-width:200px;
+	margin:0px 3px 0px 2px;
+}
+
+/*website style for width less than 550px */
+@media screen and (max-width: 550px) {
+	#home h1{
+		font-size:18px;
+        margin:0px 0px 0px 0px;
+        padding:0px 0px 0px 0px;
+    }
+    
+	#home ul li a{
+		min-width:200px;
+		margin:0px 3px 0px 2px;
+		font-size:15px;
+	}
+	
+	.ui-footer {
+		text-shadow: 2px 2px white;
+		text-align:left;
+		font-size:13px;  
+	}
+	
+	.ui-header { 
+	   	padding:0px 0px 0px 0px;
+	    margin:0px 0px 0px 0px;
+ 	    font-size:18px;
+    }
+}

@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+    <head>
+ 
+	    <title>SuperMarket Logger</title> 
+	    <link href="style.css" rel="stylesheet" type="text/css">
+        <link rel ="stylesheet" href="jquery.mobile-1.4.5.css" />
+	    <meta name="viewport" content="width=device-width, initial-scale=1"> 
+		<meta name="apple-mobile-web-app-capable" content="yes" />
+	    <script src="jquery.js"></script>
+	    <script src="jquery.mobile-1.4.5.js"></script>
+	    <script src="toilet_roll_logs.js"></script>
+
+    </head> 
+	
+    <body> 
+
+        <div data-role="page" id="home">
+
+	        <div data-role="header">
+
+		       <h1>SuperMarket Logger</h1>
+
+	        </div><!-- /header -->
+
+	        <div data-role="content">	
+			  <!--// Toilet roll List -->
+
+		        <ul data-role="listview">
+		     	    <li><a id="0" onclick="getID(this)">Quiltex</a></li>
+			        <li><a id="1" onclick="getID(this)">Kleenox</a></li>
+			        <li><a id="2" onclick="getID(this)">InHouseBrand</a></li>
+			        <li><a id="3" onclick="getID(this)">AbSorbent</a></li>
+			        <li><a id="4" onclick="getID(this)">SoftLife</a></li>
+		        </ul>
+
+	        </div><!-- /content -->
+
+	        <div data-role="footer" >
+			
+		        <h2>&copy; CQUniversity, 2020.</h2>
+				
+	        </div><!-- /footer -->
+		
+        </div><!-- /page -->
+
+            <!-- Page for each toilet roll brand-->
+        <div data-role="page" id="treatment">
+
+	        <div data-role="header">
+		        <a href="#" id="clear" onclick="removeAll()" data-role="button" class="ui-btn-left">Clear</a>
+		        <h1 id="toiletRoll">Quiltex</h1>
+		        <a href="#" onclick="show_logs()" data-role="button" class="ui-btn-right">Show Logs</a>
+	        </div>	<!-- /header for toilet roll brand page -->
+
+	        <div data-role="content">	
+
+		        <form name="myForm">
+			        <label for="toiletRoll_id"> Product code: </label>
+			        <input type="number" name="product" id="toiletRoll_id" placeholder="XXXX"/>
+			        <label for="num_rolls_stacked" >Number of rolls stacked:</label>
+			        <input type="number" name="number-rolls" id="num_rolls_stacked" placeholder="0->1000"/>
+			        <label for="width">Width (cm):</label>
+			        <input type="number" name="width" id="width" placeholder="0->15"/>
+			        <label for="length">Length (cm):</label>
+			        <input type="number" name="length" id="length" placeholder="0->15"/>
+			        <label for="softness">Softness:</label>
+			        <select id="softness">
+				        <option hidden disabled selected value>-</option>
+				        <option value="1">Single-Ply</option>
+				        <option value="2">2-Ply</option>
+				        <option value="3">3-Ply</option>
+			        </select>
+			     	<hr>
+				    <input type="button" value="Save Log Entry" id="saveLog" /> 
+				</form>
+              
+	        </div><!-- /content -->
+
+		    <div  data-role="footer">
+ 
+			    <a  id="next" onclick="nextpage()" data-role="button" data-icon="arrow-r">Next</a>
+			    <a  id="previous" onclick="previouspage()" data-role="button" data-icon="arrow-l">Previous</a>
+			    <a href="index.html" data-role="button" data-icon="home">Home</a>
+
+		    </div><!-- /footer -->
+
+	    </div><!-- /page -->
+		
+
+		<!-- Page showlog-->
+	    <div data-role="page" id="showLogs" data-add-back-btn="true" >
+
+		    <div data-role="header">
+			    <a href="#" onClick="getLogs()" data-role="button" data-icon="plus">Get...</a>
+				<h1 id="title">Current data logs</h1>
+				<a href="#send" data-role="button" data-rel="dialog" data-icon="home">Send...</a>
+			</div>
+			<div data-role="content" >
+				<h3>Current log entries:</h3>
+				<br/>
+	            Date, latitude, longitude, id, number of rolls,width, length, category of softness
+				<ul id="toilet_log" data-role="listview" data-inset="true"></ul>
+			</div>
+			<div data-role="footer">
+				<a href="index.html" data-role="button" data-icon="delete">Home</a>
+			</div>
+		</div>
+	
+	<!-- Data for page showlog-->
+
+	<ul id ="subpage">
+		<li id="item_">
+			<span class="the_time"></span>
+			<span class="latitude_log"></span>
+			<span class="longitude_log"></span>
+			<span class="toiletroll_log"></span>
+			<span class="numberRolls_log"></span>
+			<span class="width_log"></span>
+			<span class="length_log"></span>
+			<span class="softness_log"></span>
+		</li>
+	</ul>
+
+	<!-- /Get Logs page -->
+    <div data-role="page" id="get-log-page" data-title="Log Page"> 
+        <div data-role="header">
+            <a href="#" onClick="getLogs()" data-role="button" data-icon="plus">Get Logs</a>
+            <h1 id="get-log-header">Toilet Paper logs</h1>
+            <a href="#home" data-role="button" data-icon="home">Home</a>
+        </div> 
+        <!-- /header -->
+        <div data-role="content">
+            <h3>Cloud toilet log entries:</h3>
+            <p class="get-log-text">Date, latitude, longitude, id, weight, width, diameter, category </p>
+            <div class="ui-grid outer-grid">
+                <div class="ui-block outer-block">
+                    <div class="ui-block" id="current-item-logs">
+
+                    </div>
+                </div>
+            </div><!-- /grid-b -->
+        </div> 
+        <!-- /content -->
+        <div data-role="footer">
+             <a href="#" onClick="show_logs()" data-role="button">Back</a>
+        </div> 
+        <!-- /footer -->
+    </div>
+    <!-- /Get Logs page -->
+	
+	<!-- sendlogs dialoge box -->
+
+	<div data-role="page" id="send" >
+		<div data-role="header">
+			<h1>Send logs?</h1>
+		</div>
+
+		<div data-role="content">
+		    <h4>Do you want to send all logs, this has the effect of deleting all logs?</h4><br/>
+		    <a href="#" data-rel="back" data-role="button" data-inline="true">No</a>
+     		<a onclick="yes()" data-role="button" data-inline="true" >Yes</a>
+
+		</div>
+	</div>
+
+
+	</body>
+</html>
