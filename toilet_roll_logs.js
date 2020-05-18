@@ -95,10 +95,12 @@ $(document).delegate("#treatment", "pagecreate", function() {
 			length:$('#length').val(),
 			softness_type:conds[$('#softness').val()]
 			};
+
 	//the object is converted to string		
 			switch (toiletRollNumber) {
 			    case 0:
 			        quiltex_items.push(itemdata);
+			        console.log(quiltex_items);
     	            localStorage.quiltex_items = JSON.stringify(quiltex_items);
        	        break;
                 case 1:
@@ -199,6 +201,7 @@ function show_logs() {
 
     switch (toiletRollNumber) {
      case 0:
+     	console.log(quiltex_items);
   		for( var i = 0; i < quiltex_items.length; i++ ) {
     		additem(quiltex_items[i],true);
   		};
@@ -243,7 +246,7 @@ $(document).ready(function(){
 });
 
 
-function additem(itemdata, nosave) {
+function additem(itemdata, nosave, target = null) {
 	var item = $('#item_').clone();
 	
 	item.attr({id:itemdata.id});
@@ -255,77 +258,111 @@ function additem(itemdata, nosave) {
     item.find('span.width_log').text(", "+itemdata.width);
     item.find('span.length_log').text(", "+itemdata.length);   
     item.find('span.softness_log').text(", "+itemdata.softness_type);
-    if (!nosave){
+    
+
+    if(target == null){
+    	if (!nosave){
 		$("#toilet_log").append(item).listview('refresh');
+	    }
+		else {
+			$("#toilet_log").append(item);
+		}
     }
-	else {
-		$("#toilet_log").append(item);
-	}
+    else{
+    	if (!nosave){
+    		$("#"+target).append(item).listview('refresh');
+	    }
+		else {
+			$("#"+target).append(item);
+		}
+    	
+    }
 }
 
 // Function for the button yes in sendlog
 function yes(){
-	
 	var empty=$('#toilet_log').empty();
 	var data;
+
 	switch (toiletRollNumber) {
 		case 0:
-		    /*while( quiltex_items.length) { 
+			data = JSON.parse(localStorage.quiltex_items || '[]');
+		    while( quiltex_items.length) { 
 			    quiltex_items.shift();
 			}
-            localStorage.removeItem("quiltex_items")*/   
-            data = quiltex_items;
-			console.log(quiltex_items);
+            localStorage.removeItem("quiltex_items")   
         break
         case 1:
-            /*while( kleenox_items.length) {
+            data = JSON.parse(localStorage.kleenox_items || '[]');
+            while( kleenox_items.length) {
 	            kleenox_items.shift();
 			}	
-            localStorage.removeItem("kleenox_items")*/   
-            console.log(kleenox_items);
-            data = kleenox_items;
+            localStorage.removeItem("kleenox_items") 
         break
 		case 2:
-		    /*while( inHouseBrand_items.length) { 
+			data = JSON.parse(localStorage.inHouseBrand_items || '[]');
+		    while( inHouseBrand_items.length) { 
                 inHouseBrand_items.shift();
 		    }
-            localStorage.removeItem("inHouseBrand_items")*/ 
-            console.log(inHouseBrand_items);  
+            localStorage.removeItem("inHouseBrand_items") 
         break
         case 3:
-            /*while( abSorbent_items.length) { 
+        	data = JSON.parse(localStorage.abSorbent_items || '[]');
+            while( abSorbent_items.length) { 
                 abSorbent_items.shift();
             }
-            localStorage.removeItem("abSorbent_items")*/  
-            console.log(abSorbent_items); 
+            localStorage.removeItem("abSorbent_items")  
         break
 	    case 4:
-            /*while( softLife_items.length) { 
+	    	data = JSON.parse(localStorage.softLife_items || '[]');
+            while( softLife_items.length) { 
                 softLife_items.shift();
             }
-            localStorage.removeItem(softLife_items) */  
-            console.log(softLife_items);
+            localStorage.removeItem(softLife_items)  
         break
 
     }
+    console.log(data);
 	$.ajax({
               type: 'POST',
               data: {'logs':JSON.stringify(data)},
               url: 'http://127.0.0.1:3000/toiletroll/log',
+              dataType:'json',
               success: function(response) {
-                  console.log(response);
+                // Success message
+                alert(response.msg);
               },
               error: function(data) {
-                  
+              	// Failure message
+                alert("Data could not be sent to server.");
               }
           });
     $.mobile.changePage("index.html#treatment")
-	alert('Logs sent')
+	alert('Logs sent');
 
 }
 
 // Back page
 function getLogs(){
+	var toiletRollType = treatments[toiletRollNumber];
+	$.ajax({
+              type: 'GET',
+              url: 'http://127.0.0.1:3000/toiletroll/search/?type='+toiletRollType,
+              dataType:'json',
+              success: function(response) {
+              	//console.log(response.toiletRollLogs);
+              	var respLogsArr = response.toiletRollLogs;
+              	$('#response-log-items').html("");
+			    respLogsArr.forEach(function (logs) {
+			        console.log(logs);
+			        additem(logs,true,"response-log-items");
+			    });
+              },
+              error: function(data) {
+              	// Failure message
+                alert("Data could not be fetched from server.");
+              }
+          });
     $.mobile.changePage("#get-log-page");
 }
 

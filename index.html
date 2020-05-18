@@ -135,13 +135,8 @@
         <div data-role="content">
             <h3>Cloud toilet log entries:</h3>
             <p class="get-log-text">Date, latitude, longitude, id, weight, width, diameter, category </p>
-            <div class="ui-grid outer-grid">
-                <div class="ui-block outer-block">
-                    <div class="ui-block" id="current-item-logs">
-
-                    </div>
-                </div>
-            </div><!-- /grid-b -->
+            <ul id="response-log-items" data-role="listview" data-inset="true"></ul>
+            <!-- /grid-b -->
         </div> 
         <!-- /content -->
         <div data-role="footer">
@@ -161,7 +156,7 @@
 		<div data-role="content">
 		    <h4>Do you want to send all logs, this has the effect of deleting all logs?</h4><br/>
 		    <a href="#" data-rel="back" data-role="button" data-inline="true">No</a>
-     		<a onclick="yes()" data-role="button" data-inline="true" >Yes</a>
+     		<a onClick="yes()" data-role="button" data-inline="true" >Yes</a>
 
 		</div>
 	</div>
