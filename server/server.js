@@ -53,8 +53,9 @@ app.post('/toiletroll/log', function(req, res) {
 });
 
 // API Routes for post
-app.get('/toiletroll/search/:query', function(req, res){
+app.get('/toiletroll/search', function(req, res){
   let type = req.query.type;
+  console.log("search for "+type+" requested.");
   let data = logCollection.find({'id':type}).toArray((err, cursor) => {
             if (err) {
                 return res.status(500).json({

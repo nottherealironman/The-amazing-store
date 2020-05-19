@@ -13,9 +13,6 @@ var longitude = 0.0;
 var watchGeo=null;
 document.ontouchmove = function(e){ e.preventDefault(); }
 
-
-
-
 //Define the page header for each brand
 function getID(theValue){
    switch (theValue.id ) {
@@ -233,6 +230,7 @@ function show_logs() {
    	$.mobile.changePage("index.html#showLogs")
 	var item = $('#title');
     item.text(treatments[toiletRollNumber]);
+    $('#response-log-items').html("");
 }
 
 
@@ -318,11 +316,11 @@ function yes(){
             while( softLife_items.length) { 
                 softLife_items.shift();
             }
-            localStorage.removeItem(softLife_items)  
+            localStorage.removeItem("softLife_items")  
         break
 
     }
-    console.log(data);
+    
 	$.ajax({
               type: 'POST',
               data: {'logs':JSON.stringify(data)},
@@ -350,13 +348,18 @@ function getLogs(){
               url: 'http://127.0.0.1:3000/toiletroll/search/?type='+toiletRollType,
               dataType:'json',
               success: function(response) {
-              	//console.log(response.toiletRollLogs);
               	var respLogsArr = response.toiletRollLogs;
               	$('#response-log-items').html("");
-			    respLogsArr.forEach(function (logs) {
-			        console.log(logs);
-			        additem(logs,true,"response-log-items");
-			    });
+              	// Check if returned result is empty or not
+              	if(Object.keys(respLogsArr).length != 0 && respLogsArr.constructor != Object){
+              		respLogsArr.forEach(function (logs) {
+			        	additem(logs,true,"response-log-items");
+			    	});
+              	}
+              	else{
+              		$('#response-log-items').html("No data found.");
+              	}
+			    
               },
               error: function(data) {
               	// Failure message
