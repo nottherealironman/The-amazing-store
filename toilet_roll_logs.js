@@ -324,7 +324,7 @@ function yes(){
 	$.ajax({
               type: 'POST',
               data: {'logs':JSON.stringify(data)},
-              url: 'http://127.0.0.1:3000/toiletroll/log',
+              url: 'http://127.0.0.1:5000/toiletroll/log',
               dataType:'json',
               success: function(response) {
                 // Success message
@@ -345,7 +345,7 @@ function getLogs(){
 	var toiletRollType = treatments[toiletRollNumber];
 	$.ajax({
               type: 'GET',
-              url: 'http://127.0.0.1:3000/toiletroll/search/?type='+toiletRollType,
+              url: 'http://127.0.0.1:5000/toiletroll/search/?type='+toiletRollType,
               dataType:'json',
               success: function(response) {
               	var respLogsArr = response.toiletRollLogs;

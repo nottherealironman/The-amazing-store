@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 /* Mongodb configuration */
 const MongoClient = require('mongodb').MongoClient;
-var url = "mongodb+srv://abhishek:melbourne@cluster0-jkjwt.mongodb.net/test?retryWrites=true&w=majority";
+var url = "mongodb://localhost:27017/logsRecord";
 
 var logCollection;
 MongoClient.connect(url, { useUnifiedTopology: true })
@@ -72,6 +72,6 @@ app.get('/toiletroll/search', function(req, res){
   //res.send(JSON.stringify(data));
 });
 
-app.listen(3000, function(){
-  console.log("Server running");
+app.listen(5000, function(){
+  console.log("Server running on port 5000");
 });
