@@ -1,5 +1,5 @@
 
-# TheAmazingStore (Node + JQueryMobile)
+# TheAmazingStore (Node + MongoDB + JQueryMobile)
 
 Steps to run locally:
 
