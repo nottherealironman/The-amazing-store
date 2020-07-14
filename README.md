@@ -1,9 +1,7 @@
 
-How to get started with # TheAmazingStore
+# TheAmazingStore (Node + JQueryMobile)
 
-Steps:
+Steps to run locally:
 
-1. Go to server directory
- # cd server
-2. Start the server
- # npm run dev
+1. cd server
+2. npm run dev
